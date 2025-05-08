@@ -17,9 +17,7 @@ set(CXX "${CROSS_PREFIX}g++")
 set(AR "${CROSS_PREFIX}ar")
 set(RANLIB "${CROSS_PREFIX}ranlib")
 set(SIZE "${CROSS_PREFIX}size")
-set(STRIP "${CROSS_PREFIX}strip")
 set(SHLIB "${CC} -shared")
-set(STRIPLIB "${STRIP} --strip-unneeded")
 set(PYTHON "python3")
 
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
@@ -91,35 +89,17 @@ set_target_properties(lgpio PROPERTIES
     VERSION ${SOVERSION}
     SOVERSION ${SOVERSION}
 )
-add_custom_command(TARGET lgpio POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SHARED_LIBRARY_PREFIX}lgpio.${SOVERSION} ${CMAKE_SHARED_LIBRARY_PREFIX}lgpio
-    COMMAND ${STRIP} $<TARGET_FILE:lgpio>
-    COMMAND ${SIZE} $<TARGET_FILE:lgpio>
-)
 
 add_library(rgpio SHARED ${OBJ_RGPIO})
 set_target_properties(rgpio PROPERTIES
     VERSION ${SOVERSION}
     SOVERSION ${SOVERSION}
 )
-add_custom_command(TARGET rgpio POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SHARED_LIBRARY_PREFIX}rgpio.${SOVERSION} ${CMAKE_SHARED_LIBRARY_PREFIX}rgpio
-    COMMAND ${STRIP} $<TARGET_FILE:rgpio>
-    COMMAND ${SIZE} $<TARGET_FILE:rgpio>
-)
 
 add_executable(rgpiod rgpiod.c ${OBJ_RGPIOD})
-add_custom_command(TARGET rgpiod POST_BUILD
-    COMMAND ${STRIP} $<TARGET_FILE:rgpiod>
-    COMMAND ${SIZE} $<TARGET_FILE:rgpiod>
-)
 target_link_libraries(rgpiod lgpio pthread rt)
 
 add_executable(rgs rgs.c ${OBJ_RGS})
-add_custom_command(TARGET rgs POST_BUILD
-    COMMAND ${STRIP} $<TARGET_FILE:rgs>
-    COMMAND ${SIZE} $<TARGET_FILE:rgs>
-)
 
 add_custom_target(docs DEPENDS ${DOCS})
 

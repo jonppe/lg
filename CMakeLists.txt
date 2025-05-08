@@ -5,26 +5,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wall -pthread -fpic ${CMAKE_CPP_FLAGS}"
 
 set(SOVERSION 1)
 
-set(prefix "/usr/local")
-set(exec_prefix "${prefix}")
-set(bindir "${exec_prefix}/bin")
-set(includedir "${prefix}/include")
-set(libdir "${prefix}/lib")
-set(mandir "${prefix}/man")
-
-set(CC "${CROSS_PREFIX}gcc")
-set(CXX "${CROSS_PREFIX}g++")
-set(AR "${CROSS_PREFIX}ar")
-set(RANLIB "${CROSS_PREFIX}ranlib")
-set(SIZE "${CROSS_PREFIX}size")
-set(SHLIB "${CC} -shared")
-set(PYTHON "python3")
-
-SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
-
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
@@ -105,10 +85,10 @@ add_custom_target(docs DEPENDS ${DOCS})
 
 # add_custom_target(all DEPENDS lgpio rgpio rgpiod rgs docs)
 
-install(TARGETS lgpio DESTINATION ${libdir})
-install(TARGETS rgpio DESTINATION ${libdir})
-install(TARGETS rgpiod DESTINATION ${bindir})
-install(TARGETS rgs DESTINATION ${bindir})
+install(TARGETS lgpio DESTINATION lib)
+install(TARGETS rgpio DESTINATION lib)
+install(TARGETS rgpiod DESTINATION bin)
+install(TARGETS rgs DESTINATION bin)
 
-install(FILES lgpio.h rgpio.h DESTINATION ${includedir})
-install(FILES DOC/src/defs/rgs.def DOC/src/defs/rgpiod.def DOC/src/defs/permits.def DOC/src/defs/scripts.def DESTINATION ${mandir})
+install(FILES lgpio.h rgpio.h DESTINATION include)
+install(FILES DOC/src/defs/rgs.def DOC/src/defs/rgpiod.def DOC/src/defs/permits.def DOC/src/defs/scripts.def DESTINATION share/man)
